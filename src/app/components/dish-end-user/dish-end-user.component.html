@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Menu</h2>
+  
+    <div *ngFor="let dish of dishes" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ dish.name }}</h5>
+        <p class="card-text">
+          {{ dish.description }}<br>
+          <strong>Price:</strong> ${{ dish.price }}
+        </p>
+        <img *ngIf="dish.picture" [src]="dish.picture" alt="{{ dish.name }}" class="img-thumbnail mb-2" style="max-height: 150px;">
+        <div>
+          <button class="btn btn-sm btn-success" (click)="addToCart(dish)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  

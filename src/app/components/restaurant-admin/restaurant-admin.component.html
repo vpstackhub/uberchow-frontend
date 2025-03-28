@@ -1,0 +1,67 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Manage Restaurants</h2>
+  
+    <div class="card p-3 mb-4">
+      <h5>Add New Restaurant</h5>
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newRestaurant.name">
+        </div>
+        <div class="col-md-6 mb-2">
+          <input type="text" class="form-control" placeholder="Address" [(ngModel)]="newRestaurant.address">
+        </div>
+        <div class="col-md-6 mb-2">
+          <input type="text" class="form-control" placeholder="Phone" [(ngModel)]="newRestaurant.phone">
+        </div>
+        <div class="col-md-6 mb-2">
+          <input type="number" class="form-control" placeholder="City ID" [(ngModel)]="newRestaurant.cityId">
+        </div>
+        <div class="col-md-6 mb-2">
+          <input type="text" class="form-control" placeholder="Contact Name" [(ngModel)]="newRestaurant.contact">
+        </div>
+        <div class="col-md-6 mb-2">
+          <input type="text" class="form-control" placeholder="Image URL" [(ngModel)]="newRestaurant.picture">
+        </div>
+        <div class="col-12 mb-2" *ngIf="newRestaurant.picture">
+          <img [src]="newRestaurant.picture" alt="Preview" class="img-thumbnail" style="max-height: 150px;">
+        </div>
+        <div class="col-12">
+          <button class="btn btn-success" (click)="addRestaurant()">Add Restaurant</button>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngFor="let restaurant of restaurants" class="card mb-3">
+      <div class="card-body">
+        <div *ngIf="editingRestaurant?.id !== restaurant.id">
+          <h5 class="card-title">{{ restaurant.name }}</h5>
+          <p class="card-text">
+            <strong>Address:</strong> {{ restaurant.address }} <br>
+            <strong>Phone:</strong> {{ restaurant.phone }} <br>
+            <strong>City ID:</strong> {{ restaurant.cityId }} <br>
+            <strong>Contact:</strong> {{ restaurant.contact }} <br>
+          </p>
+          <img *ngIf="restaurant.picture" [src]="restaurant.picture" alt="Restaurant Image" class="img-thumbnail mb-2" style="max-height: 150px;">
+          <div>
+            <button class="btn btn-sm btn-primary me-2" (click)="editRestaurant(restaurant)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteRestaurant(restaurant.id!)">Delete</button>
+          </div>
+        </div>
+  
+        <div *ngIf="editingRestaurant?.id === restaurant.id">
+          <input type="text" class="form-control mb-2" [(ngModel)]="editingRestaurant!.name">
+          <input type="text" class="form-control mb-2" [(ngModel)]="editingRestaurant!.address">
+          <input type="text" class="form-control mb-2" [(ngModel)]="editingRestaurant!.phone">
+          <input type="number" class="form-control mb-2" [(ngModel)]="editingRestaurant!.cityId">
+          <input type="text" class="form-control mb-2" [(ngModel)]="editingRestaurant!.contact">
+          <input type="text" class="form-control mb-2" [(ngModel)]="editingRestaurant!.picture">
+          <img *ngIf="editingRestaurant!.picture" [src]="editingRestaurant!.picture" alt="Preview" class="img-thumbnail mb-2" style="max-height: 150px;">
+          <div>
+            <button class="btn btn-sm btn-success me-2" (click)="updateRestaurant()">Update</button>
+            <button class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

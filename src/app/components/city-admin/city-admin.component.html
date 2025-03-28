@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h3>Manage Cities</h3>
+    
+    <div class="mb-3">
+      <input [(ngModel)]="newCity.name" class="form-control mb-2" placeholder="City Name">
+      <input [(ngModel)]="newCity.country" class="form-control mb-2" placeholder="Country">
+      <button (click)="addCity()" class="btn btn-success">Add City</button>
+    </div>
+  
+    <div *ngIf="editCity" class="mb-3">
+      <input [(ngModel)]="editCity.name" class="form-control mb-2">
+      <input [(ngModel)]="editCity.country" class="form-control mb-2">
+      <button (click)="updateCity()" class="btn btn-primary">Update</button>
+      <button (click)="editCity = null" class="btn btn-secondary ms-2">Cancel</button>
+    </div>
+    
+    <ul class="list-group">
+      <li *ngFor="let city of cities" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ city.name }} - {{ city.country }}
+        <span>
+          <button class="btn btn-sm btn-info me-2" (click)="setEditCity(city)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteCity(city.id)">Delete</button>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
