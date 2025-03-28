@@ -24,4 +24,14 @@ export class RestaurantEndUserComponent implements OnInit {
   viewDishes(restaurantId: number) {
     this.router.navigate(['/dishes', restaurantId]);
   }
+
+  goToDashboard() {
+    this.router.navigate(['/user-dashboard']);
+  }
+
+  goToCart() {
+    this.router.navigate(['/cart']);
+  }
 }
+
+

@@ -1,63 +1,69 @@
-<p>dish<div class="container mt-4">
-    <h2 class="mb-4">Manage Dishes</h2>
-  
-    <div class="card p-3 mb-4">
-      <h5>Add New Dish</h5>
-      <div class="row">
-        <div class="col-md-6 mb-2">
-          <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newDish.name">
-        </div>
-        <div class="col-md-6 mb-2">
-          <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newDish.description">
-        </div>
-        <div class="col-md-4 mb-2">
-          <input type="number" class="form-control" placeholder="Price" [(ngModel)]="newDish.price">
-        </div>
-        <div class="col-md-4 mb-2">
-          <input type="number" class="form-control" placeholder="Restaurant ID" [(ngModel)]="newDish.restaurantId">
-        </div>
-        <div class="col-md-4 mb-2">
-          <input type="text" class="form-control" placeholder="Image URL" [(ngModel)]="newDish.picture">
-        </div>
-        <div class="col-12 mb-2" *ngIf="newDish.picture">
-          <img [src]="newDish.picture" alt="Preview" class="img-thumbnail" style="max-height: 150px;">
-        </div>
-        <div class="col-12">
-          <button class="btn btn-success" (click)="addDish()">Add Dish</button>
-        </div>
+<div class="container mt-4">
+  <h2 class="mb-4">Manage Dishes</h2>
+
+  <!-- Add New Dish -->
+  <div class="card p-3 mb-4">
+    <h5>Add New Dish</h5>
+    <div class="row g-2">
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Name" [(ngModel)]="newDish.name">
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-control" placeholder="Description" [(ngModel)]="newDish.description">
+      </div>
+      <div class="col-md-2">
+        <input type="number" class="form-control" placeholder="Price" [(ngModel)]="newDish.price">
+      </div>
+      <div class="col-md-2">
+        <input type="number" class="form-control" placeholder="Restaurant ID" [(ngModel)]="newDish.restaurantId">
+      </div>
+      <div class="col-md-12">
+        <input type="text" class="form-control" placeholder="Image URL" [(ngModel)]="newDish.picture">
+      </div>
+      <div class="col-12 text-center" *ngIf="newDish.picture">
+        <img [src]="newDish.picture" alt="Preview" class="img-fluid rounded" style="max-height: 150px;">
+      </div>
+      <div class="col-12 text-end">
+        <button class="btn btn-success mt-2" (click)="addDish()">Add Dish</button>
       </div>
     </div>
-  
-    <div *ngFor="let dish of dishes" class="card mb-3">
-      <div class="card-body">
-        <div *ngIf="editingDish?.id !== dish.id">
-          <h5 class="card-title">{{ dish.name }}</h5>
-          <p class="card-text">
-            <strong>Description:</strong> {{ dish.description }} <br>
-            <strong>Price:</strong> ${{ dish.price }} <br>
-            <strong>Restaurant ID:</strong> {{ dish.restaurantId }}
-          </p>
-          <img *ngIf="dish.picture" [src]="dish.picture" alt="Dish Image" class="img-thumbnail mb-2" style="max-height: 150px;">
-          <div>
-            <button class="btn btn-sm btn-primary me-2" (click)="editDish(dish)">Edit</button>
-            <button class="btn btn-sm btn-danger" (click)="deleteDish(dish.id!)">Delete</button>
+  </div>
+
+  <!-- List Dishes -->
+  <div class="row">
+    <div *ngFor="let dish of dishes" class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <div *ngIf="editingDish?.id !== dish.id">
+            <h5>{{ dish.name }}</h5>
+            <p>
+              {{ dish.description }}<br>
+              <strong>Price:</strong> ${{ dish.price }}<br>
+              <strong>Restaurant ID:</strong> {{ dish.restaurantId }}
+            </p>
+            <img *ngIf="dish.picture" [src]="dish.picture" alt="Dish Image" class="img-fluid rounded mb-2" style="max-height: 150px;">
+            <div>
+              <button class="btn btn-sm btn-primary me-2" (click)="editDish(dish)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteDish(dish.id!)">Delete</button>
+            </div>
           </div>
-        </div>
-  
-        <div *ngIf="editingDish?.id === dish.id">
+
+          <div *ngIf="editingDish?.id === dish.id">
             <input type="text" class="form-control mb-2" [(ngModel)]="editingDish!.name">
             <input type="text" class="form-control mb-2" [(ngModel)]="editingDish!.description">
             <input type="number" class="form-control mb-2" [(ngModel)]="editingDish!.price">
             <input type="number" class="form-control mb-2" [(ngModel)]="editingDish!.restaurantId">
             <input type="text" class="form-control mb-2" [(ngModel)]="editingDish!.picture">
-            <img *ngIf="editingDish!.picture" [src]="editingDish!.picture" alt="Preview" class="img-thumbnail mb-2" style="max-height: 150px;">
+            <img *ngIf="editingDish!.picture" [src]="editingDish!.picture" alt="Preview" class="img-fluid rounded mb-2" style="max-height: 150px;">
             <div>
               <button class="btn btn-sm btn-success me-2" (click)="updateDish()">Update</button>
               <button class="btn btn-sm btn-secondary" (click)="cancelEdit()">Cancel</button>
             </div>
           </div>
-          
+        </div>
       </div>
     </div>
   </div>
+</div>
+
   

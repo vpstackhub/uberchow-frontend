@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { Dish } from '../../models/dish.model';
 @Component({
   selector: 'app-dish-end-user',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dish-end-user.component.html',
   styleUrls: ['./dish-end-user.component.css']
 })
@@ -16,7 +16,7 @@ export class DishEndUserComponent implements OnInit {
   dishes: Dish[] = [];
   restaurantId!: number;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.restaurantId = Number(this.route.snapshot.paramMap.get('restaurantId'));
@@ -36,4 +36,18 @@ export class DishEndUserComponent implements OnInit {
     localStorage.setItem('cart', JSON.stringify(cart));
     alert(`${dish.name} added to cart!`);
   }
+
+  goToCart() {
+    this.router.navigate(['/cart']);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['/user-dashboard']);
+  }
+
+  goToCheckout() {
+    this.router.navigate(['/cart']);
+  }
+  
 }
+

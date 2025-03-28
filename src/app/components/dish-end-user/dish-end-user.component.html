@@ -1,19 +1,31 @@
 <div class="container mt-4">
-    <h2 class="mb-4">Menu</h2>
+  <h2 class="mb-4">Menu</h2>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-secondary" (click)="goToDashboard()">🔙 Back to Dashboard</button>
+    <button class="btn btn-outline-success" (click)="goToCart()">🛒 Go to Cart</button>
+  </div>
   
-    <div *ngFor="let dish of dishes" class="card mb-3">
-      <div class="card-body">
-        <h5 class="card-title">{{ dish.name }}</h5>
-        <p class="card-text">
-          {{ dish.description }}<br>
-          <strong>Price:</strong> ${{ dish.price }}
-        </p>
-        <img *ngIf="dish.picture" [src]="dish.picture" alt="{{ dish.name }}" class="img-thumbnail mb-2" style="max-height: 150px;">
-        <div>
-          <button class="btn btn-sm btn-success" (click)="addToCart(dish)">Add to Cart</button>
+
+  <div class="row">
+    <div *ngFor="let dish of dishes" class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img *ngIf="dish.picture" [src]="dish.picture" alt="{{ dish.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ dish.name }}</h5>
+          <p class="card-text">{{ dish.description }}</p>
+          <p class="card-text"><strong>Price:</strong> ${{ dish.price }}</p>
+          <button class="btn btn-success mt-auto" (click)="addToCart(dish)">Add to Cart</button>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="text-center mt-5">
+    <button class="btn btn-lg btn-primary" (click)="goToCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+
   
   
