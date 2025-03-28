@@ -1,59 +1,74 @@
-# UberchowFrontend
+# 🍔 UberChow - Food Delivery Web App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.5.
+**UberChow** is a full-stack food delivery application inspired by Uber Eats, built with **Angular** (frontend) and **Spring Boot + MySQL** (backend). It allows users to browse restaurants, add dishes to cart, checkout, and track orders. Admins can manage cities, restaurants, and dishes.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Features
+
+### 👤 End-User
+- Browse available restaurants and dishes
+- Add dishes to cart
+- Checkout with dummy payment
+- Sign up / Log in at checkout
+- View past orders
+- Manage user profile
+
+### 🛠️ Admin
+- Admin login
+- Dashboard with CRUD for:
+  - Cities
+  - Restaurants (with image URLs)
+  - Dishes (with image URLs)
+
+---
+
+## 🧱 Tech Stack
+
+| Layer       | Technology           |
+|-------------|----------------------|
+| Frontend    | Angular (Standalone Components) |
+| Backend     | Spring Boot (REST API) |
+| Database    | MySQL (locally and AWS RDS-ready) |
+| Tools       | Bootstrap, Postman, GitHub |
+
+---
+
+## 📦 Getting Started
+
+### Frontend
 
 ```bash
+cd uberchow-frontend
+npm install
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Backend
+cd uberchow-backend
+mvn spring-boot:run
 
-## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+📂 Project Structure
 
-```bash
-ng generate component component-name
-```
+uberchow-frontend/
+├── components/
+│   ├── admin-dashboard/
+│   ├── end-user-dashboard/
+│   ├── restaurant-admin/
+│   ├── restaurant-end-user/
+│   ├── dish-admin/
+│   └── dish-end-user/
+├── models/
+│   ├── dish.model.ts
+│   ├── restaurant.model.ts
+│   └── cart.model.ts
+└── app.routes.ts
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+🤝 Author
+Valerio P.
+Full-Stack Developer | Ex-Chef turned Coder
+📍 California
+🛠️ Passion for clean code, UX, and tasty apps.
 
-```bash
-ng generate --help
-```
+Project built for Capstone & Portfolio. Open to contributions and feedback!
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
