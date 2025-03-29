@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Restaurant } from '../../models/restaurant.model';
+import { environment } from '../../../environments/environment'; 
 
 @Component({
   selector: 'app-restaurant-end-user',
@@ -17,7 +18,8 @@ export class RestaurantEndUserComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    this.http.get<Restaurant[]>('http://localhost:8080/api/restaurants')
+    
+    this.http.get<Restaurant[]>(`${environment.apiUrl}/restaurants`)
       .subscribe(data => this.restaurants = data);
   }
 
@@ -33,5 +35,3 @@ export class RestaurantEndUserComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 }
-
-

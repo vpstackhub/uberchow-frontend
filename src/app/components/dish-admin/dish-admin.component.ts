@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Dish } from '../../models/dish.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dish-admin',
@@ -23,12 +24,12 @@ export class DishAdminComponent implements OnInit {
   }
 
   loadDishes() {
-    this.http.get<Dish[]>('http://localhost:8080/api/dishes')
+    this.http.get<Dish[]>(`${environment.apiUrl}/dishes`)
       .subscribe(data => this.dishes = data);
   }
 
   addDish() {
-    this.http.post<Dish>('http://localhost:8080/api/dishes', this.newDish)
+    this.http.post<Dish>(`${environment.apiUrl}/dishes`, this.newDish)
       .subscribe(() => {
         this.loadDishes();
         this.newDish = {};
@@ -41,7 +42,7 @@ export class DishAdminComponent implements OnInit {
 
   updateDish() {
     if (this.editingDish?.id) {
-      this.http.put(`http://localhost:8080/api/dishes/${this.editingDish.id}`, this.editingDish)
+      this.http.put(`${environment.apiUrl}/dishes/${this.editingDish.id}`, this.editingDish)
         .subscribe(() => {
           this.loadDishes();
           this.editingDish = null;
@@ -50,7 +51,7 @@ export class DishAdminComponent implements OnInit {
   }
 
   deleteDish(id: number) {
-    this.http.delete(`http://localhost:8080/api/dishes/${id}`)
+    this.http.delete(`${environment.apiUrl}/dishes/${id}`)
       .subscribe(() => this.loadDishes());
   }
 
@@ -58,4 +59,5 @@ export class DishAdminComponent implements OnInit {
     this.editingDish = null;
   }
 }
+
 

@@ -1,21 +1,36 @@
 <div class="container mt-5">
-    <h2 class="mb-4">Checkout</h2>
-  
-    <form (ngSubmit)="onSubmitPayment()">
+  <h2 class="mb-4">Checkout</h2>
+
+  <div *ngIf="cartItems.length === 0">
+    <p>Your cart is empty.</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0">
+    <ul>
+      <li *ngFor="let item of cartItems">{{ item.name }} - ${{ item.price }}</li>
+    </ul>
+
+    <p>Total: ${{ totalPrice.toFixed(2) }}</p>
+
+    <form *ngIf="isUserLoggedIn" (ngSubmit)="placeOrder()">
       <div class="mb-3">
         <label class="form-label">Card Number</label>
-        <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber" required>
+        <input type="text" class="form-control" [(ngModel)]="cardNumber" name="cardNumber" required />
       </div>
       <div class="mb-3">
         <label class="form-label">Expiration Date</label>
-        <input type="text" class="form-control" [(ngModel)]="expiration" name="expiration" placeholder="MM/YY" required>
+        <input type="text" class="form-control" [(ngModel)]="expiration" name="expiration" required placeholder="MM/YY" />
       </div>
       <div class="mb-3">
         <label class="form-label">CVV</label>
-        <input type="text" class="form-control" [(ngModel)]="cvv" name="cvv" required>
+        <input type="text" class="form-control" [(ngModel)]="cvv" name="cvv" required />
       </div>
-      <button type="submit" class="btn btn-success">Confirm Payment</button>
+      <button type="submit" class="btn btn-success">Place Order</button>
     </form>
+
+    <div *ngIf="!isUserLoggedIn">
+      <p>Please <a routerLink="/end-user-login">log in</a> to place your order.</p>
+    </div>
   </div>
-  
-  
+</div>
+

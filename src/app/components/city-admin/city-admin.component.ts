@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-city-admin',
@@ -22,13 +23,13 @@ export class CityAdminComponent implements OnInit {
   }
 
   getCities() {
-    this.http.get<any[]>('http://localhost:8080/api/cities').subscribe(data => {
+    this.http.get<any[]>(`${environment.apiUrl}/api/cities`).subscribe(data => {
       this.cities = data;
     });
   }
 
   addCity() {
-    this.http.post('http://localhost:8080/api/cities', this.newCity).subscribe(() => {
+    this.http.post(`${environment.apiUrl}/api/cities`, this.newCity).subscribe(() => {
       this.newCity = { name: '', country: '' };
       this.getCities();
     });
@@ -39,16 +40,17 @@ export class CityAdminComponent implements OnInit {
   }
 
   updateCity() {
-    this.http.put(`http://localhost:8080/api/cities/${this.editCity.id}`, this.editCity).subscribe(() => {
+    this.http.put(`${environment.apiUrl}/api/cities/${this.editCity.id}`, this.editCity).subscribe(() => {
       this.editCity = null;
       this.getCities();
     });
   }
 
   deleteCity(id: number) {
-    this.http.delete(`http://localhost:8080/api/cities/${id}`).subscribe(() => {
+    this.http.delete(`${environment.apiUrl}/api/cities/${id}`).subscribe(() => {
       this.getCities();
     });
   }
 }
+
 

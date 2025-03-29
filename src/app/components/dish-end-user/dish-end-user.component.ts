@@ -1,40 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Dish } from '../../models/dish.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dish-end-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule],
   templateUrl: './dish-end-user.component.html',
   styleUrls: ['./dish-end-user.component.css']
 })
 export class DishEndUserComponent implements OnInit {
   dishes: Dish[] = [];
-  restaurantId!: number;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.restaurantId = Number(this.route.snapshot.paramMap.get('restaurantId'));
-    if (this.restaurantId) {
-      this.loadDishes();
-    }
-  }
+    const restaurantId = this.route.snapshot.params['restaurantId'];
 
-  loadDishes() {
-    this.http.get<Dish[]>(`http://localhost:8080/api/dishes/restaurant/${this.restaurantId}`)
+    this.http.get<Dish[]>(`${environment.apiUrl}/dishes/restaurant/${restaurantId}`)
       .subscribe(data => this.dishes = data);
-  }
-
-  addToCart(dish: Dish) {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    cart.push({ ...dish, quantity: 1 });
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${dish.name} added to cart!`);
   }
 
   goToCart() {
@@ -45,8 +36,20 @@ export class DishEndUserComponent implements OnInit {
     this.router.navigate(['/user-dashboard']);
   }
 
+  addToCart(dish: Dish) {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existing = cart.find((item: Dish) => item.id === dish.id);
+    if (existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({ ...dish, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(`${dish.name} added to cart!`);
+  }
+  
   goToCheckout() {
-    this.router.navigate(['/cart']);
+    this.router.navigate(['/checkout']);
   }
   
 }

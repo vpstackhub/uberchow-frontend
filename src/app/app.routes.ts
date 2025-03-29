@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'admin/cities', component: CityAdminComponent },
   { path: 'admin/restaurants', component: RestaurantAdminComponent },
   { path: 'admin/dishes', component: DishAdminComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout', component: CheckoutComponent, runGuardsAndResolvers: 'always' },
   { path: 'user-dashboard', component: EndUserDashboardComponent },
   { path: 'user-restaurants', component: RestaurantEndUserComponent },
   { path: 'dishes/:restaurantId', component: DishEndUserComponent },

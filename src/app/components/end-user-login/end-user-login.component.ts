@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-end-user-login',
@@ -15,7 +16,11 @@ export class EndUserLoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute 
+  ) {}
 
   loginUser() {
     const credentials = {
@@ -23,11 +28,13 @@ export class EndUserLoginComponent {
       password: this.password
     };
 
-    this.http.post<any>('http://localhost:8080/api/auth/user/login', credentials).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/auth/user/login`, credentials).subscribe({
       next: (response) => {
         localStorage.setItem('user', JSON.stringify(response));
         alert('Login successful!');
-        this.router.navigate(['/user-dashboard']);
+
+        const redirect = this.route.snapshot.queryParamMap.get('redirect');
+        this.router.navigate([redirect || '/user-dashboard']);
       },
       error: () => {
         alert('Invalid login. Please try again.');
@@ -35,4 +42,6 @@ export class EndUserLoginComponent {
     });
   }
 }
+
+
 

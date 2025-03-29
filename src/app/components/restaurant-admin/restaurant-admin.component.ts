@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Restaurant } from '../../models/restaurant.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-restaurant-admin',
@@ -23,12 +24,12 @@ export class RestaurantAdminComponent implements OnInit {
   }
 
   loadRestaurants() {
-    this.http.get<Restaurant[]>('http://localhost:8080/api/restaurants')
+    this.http.get<Restaurant[]>(`${environment.apiUrl}/restaurants`)
       .subscribe(data => this.restaurants = data);
   }
 
   addRestaurant() {
-    this.http.post<Restaurant>('http://localhost:8080/api/restaurants', this.newRestaurant)
+    this.http.post<Restaurant>(`${environment.apiUrl}/restaurants`, this.newRestaurant)
       .subscribe(() => {
         this.loadRestaurants();
         this.newRestaurant = {};
@@ -41,7 +42,7 @@ export class RestaurantAdminComponent implements OnInit {
 
   updateRestaurant() {
     if (this.editingRestaurant?.id) {
-      this.http.put(`http://localhost:8080/api/restaurants/${this.editingRestaurant.id}`, this.editingRestaurant)
+      this.http.put(`${environment.apiUrl}/restaurants/${this.editingRestaurant.id}`, this.editingRestaurant)
         .subscribe(() => {
           this.loadRestaurants();
           this.editingRestaurant = null;
@@ -50,7 +51,7 @@ export class RestaurantAdminComponent implements OnInit {
   }
 
   deleteRestaurant(id: number) {
-    this.http.delete(`http://localhost:8080/api/restaurants/${id}`)
+    this.http.delete(`${environment.apiUrl}/restaurants/${id}`)
       .subscribe(() => this.loadRestaurants());
   }
 
