@@ -28,8 +28,6 @@ export const routes: Routes = [
   { path: 'user-login', component: EndUserLoginComponent },
   { path: 'user-sign-up', component: EndUserSignUpComponent },
   { path: 'confirmation-payment', component: ConfirmationPaymentComponent },
-
-  
   { path: '', redirectTo: 'user-dashboard', pathMatch: 'full' }
 ];
 

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-end-user-login',
@@ -13,24 +14,25 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./end-user-login.component.css']
 })
 export class EndUserLoginComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   loginUser() {
     const credentials = {
-      username: this.username,
+      email: this.email,
       password: this.password
     };
 
-    this.http.post<any>(`${environment.apiUrl}/auth/user/login`, credentials).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/users/end-user-login`, credentials).subscribe({
       next: (response) => {
-        localStorage.setItem('user', JSON.stringify(response));
+        this.authService.login(response); 
         alert('Login successful!');
 
         const redirect = this.route.snapshot.queryParamMap.get('redirect');
@@ -42,6 +44,7 @@ export class EndUserLoginComponent {
     });
   }
 }
+
 
 
 

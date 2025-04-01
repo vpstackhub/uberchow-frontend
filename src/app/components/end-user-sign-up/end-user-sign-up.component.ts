@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-end-user-sign-up',
@@ -23,14 +25,22 @@ export class EndUserSignUpComponent {
     creditCardNumber: ''
   };
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   signUp() {
-    this.http.post('http://localhost:8080/api/auth/user/signup', this.user)
+    this.http.post<any>(`${environment.apiUrl}/auth/user/signup`, this.user)
       .subscribe({
-        next: () => {
-          alert('Signup successful! Please login.');
-          this.router.navigate(['/user-login']);
+        next: (response) => {
+          this.authService.login(response); // Store user in localStorage
+          alert('Signup successful!');
+
+          const redirect = this.route.snapshot.queryParamMap.get('redirect');
+          this.router.navigate([redirect || '/user-dashboard']);
         },
         error: () => {
           alert('Signup failed. Please try again.');
@@ -38,4 +48,5 @@ export class EndUserSignUpComponent {
       });
   }
 }
+
 

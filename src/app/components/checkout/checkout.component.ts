@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { filter } from 'rxjs/operators';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -25,7 +27,7 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private route: ActivatedRoute
+    private authService: AuthService
   ) {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -50,38 +52,33 @@ export class CheckoutComponent implements OnInit {
   }
 
   initializeCheckout(): void {
-    const userRaw = localStorage.getItem('user');
-    let user: any = null;
+    const user = this.authService.getUser();
   
-    try {
-      user = JSON.parse(userRaw || '{}');
-    } catch {
-      user = null;
-    }
+    console.log('[Checkout] User data from AuthService:', user);
   
     if (!user || typeof user.id !== 'number') {
-      localStorage.removeItem('user'); // Clear stale data
+      console.log('[Checkout] No valid user. Redirecting to login...');
+      this.authService.logout();
       this.userId = null;
       this.cartItems = [];
       this.totalPrice = 0;
   
-      this.router.navigate(['/end-user-login'], {
+      this.router.navigate(['/user-login'], {
         queryParams: { redirect: '/checkout' }
       });
       return;
     }
   
     this.userId = user.id;
-  
     const cart = localStorage.getItem('cart');
     this.cartItems = cart ? JSON.parse(cart) : [];
     this.totalPrice = this.cartItems.reduce((sum, item) => sum + item.price, 0);
-  }
+  }  
   
   placeOrder(): void {
     if (!this.userId) {
       alert('You must be logged in to place an order.');
-      this.router.navigate(['/end-user-login'], {
+      this.router.navigate(['/user-login'], {
         queryParams: { redirect: '/checkout' }
       });
       return;
