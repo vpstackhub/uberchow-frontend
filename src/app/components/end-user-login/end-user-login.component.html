@@ -1,11 +1,19 @@
 <div class="container mt-5">
-    <h3 class="mb-3">End User Login</h3>
-    <div class="mb-3">
-      <input class="form-control" type="text" placeholder="Username" [(ngModel)]="email" />
-    </div>
-    <div class="mb-3">
-      <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" />
-    </div>
-    <button class="btn btn-primary" (click)="loginUser()">Login</button>
+  <h3 class="mb-3">End User Login</h3>
+
+  <div class="mb-3">
+    <input class="form-control" type="email" placeholder="Enter your email" [(ngModel)]="email" />
   </div>
-  
+  <div class="mb-3">
+    <input class="form-control" type="password" placeholder="Password" [(ngModel)]="password" />
+  </div>
+  <button class="btn btn-primary" (click)="loginUser()">Login</button>
+
+  <div *ngIf="loginFailed" class="alert alert-danger mt-3">
+    Invalid login. Please check your credentials.
+    <br />
+    <a [routerLink]="['/end-user-sign-up']" [queryParams]="{ redirect: redirect }" class="btn btn-link p-0 mt-2">
+      Don't have an account? Sign up instead.
+    </a>
+  </div>
+</div>
