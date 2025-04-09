@@ -26,7 +26,7 @@ export const routes: Routes = [
   { path: 'dishes/:restaurantId', component: DishEndUserComponent },
   { path: 'cart', component: CartComponent },
   { path: 'user-login', component: EndUserLoginComponent },
-  { path: 'user-sign-up', component: EndUserSignUpComponent },
+  { path: 'end-user-sign-up', component: EndUserSignUpComponent },
   { path: 'confirmation-payment', component: ConfirmationPaymentComponent },
   { path: '', redirectTo: 'user-dashboard', pathMatch: 'full' }
 ];
