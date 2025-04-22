@@ -14,8 +14,14 @@ import { environment } from '../../../environments/environment';
 })
 export class DishAdminComponent implements OnInit {
   dishes: Dish[] = [];
-  newDish: Partial<Dish> = {};
-  editingDish: Dish | null = null;
+  newDish: Partial<Dish> = {
+    name: '',
+    description: '',
+    price: 0,
+    picture: '',
+    restaurantId: 0
+  };
+    editingDish: Dish | null = null;
 
   constructor(private http: HttpClient) {}
 
