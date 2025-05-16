@@ -47,6 +47,10 @@ export class CartComponent implements OnInit {
     this.router.navigate(['/checkout']);
   }
 
+  goBackToRestaurants() {
+  this.router.navigate(['/restaurants']);
+}
+
   private saveCart(): void {
     localStorage.setItem('cart', JSON.stringify(this.cartItems));
   }
